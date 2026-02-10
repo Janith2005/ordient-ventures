@@ -63,15 +63,16 @@ function handleProjectClick(project) {
 
     // Update URL
     const slug = project.title.toLowerCase().replace(/ /g, '-');
-    history.pushState({ projectId: project.id }, '', `/project/${slug}`);
+    history.pushState({ projectId: project.id }, '', `project/${slug}`);
 }
 
 function closeProjectDetail() {
     document.getElementById('project-detail').classList.remove('active');
     if (lenis) lenis.start(); // Resume Lenis for main page scroll
     // Revert URL to root if we are not already there
-    if (window.location.pathname !== '/') {
-        history.pushState(null, '', '/');
+    if (window.location.pathname.includes('/project/')) {
+        const basePath = window.location.pathname.split('/project/')[0] || '/';
+        history.pushState(null, '', basePath);
     }
 }
 
@@ -454,7 +455,7 @@ renderProjects();
 // Handle Direct URL Access (Deep Linking)
 window.addEventListener('load', () => {
     const path = window.location.pathname;
-    if (path.startsWith('/project/')) {
+    if (path.includes('/project/')) {
         const slug = path.split('/project/')[1];
         if (slug) {
             // Find project by slug
