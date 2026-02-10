@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Base URL for SPA Routing helooo -->
+    <base href="/">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordient Infra - Design & Build</title>
+    <meta name="description"
+        content="Ordient Infra - Design & Build. Premium interior design and architectural excellence. Explore our selected works in residential and commercial spaces.">
+    <!-- Geist Fonts (Vercel) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.0.0/dist/fonts.css">
+    <!-- Raleway Font (Google Fonts) -->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <!-- Inter Font (Google Fonts) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css?v=1.1.9">
+</head>
+
+<body>
+
+    <!-- Bottom Controls -->
+    <div class="bottom-controls">
+        <div class="brand-pill" id="brand-pill">
+            <span>ORDIENT INFRA</span>
+        </div>
+        <div class="about-pill" id="about-pill">
+            <span>ABOUT US</span>
+        </div>
+
+        <div class="menu-pill" id="menu-pill">
+            <span id="menu-label">SELECTED WORK</span>
+            <div class="menu-icon">
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 5L5 1L9 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <main class="container">
+        <!-- Mobile Header -->
+        <header class="mobile-header">
+            <span>ORDIENT INFRA</span>
+        </header>
+        <div class="grid" id="project-grid">
+            <!-- Project cards will be injected here -->
+        </div>
+    </main>
+
+    <!-- Category Menu Overlay -->
+    <div class="category-menu" id="category-menu">
+        <div class="menu-header">
+            <span>FILTER BY</span>
+        </div>
+        <div class="category-item active" data-filter="all">All Projects</div>
+        <div class="category-item" data-filter="arch-comm">Architect Commercial</div>
+        <div class="category-item" data-filter="arch-res">Architect Residence</div>
+        <div class="category-item" data-filter="int-comm">Interior Commercial</div>
+        <div class="category-item" data-filter="int-res">Interior Residential</div>
+        <div class="category-item" data-filter="construction">Constructions</div>
+    </div>
+
+    <!-- Project Detail Overlay -->
+    <div class="project-detail-overlay" id="project-detail">
+        <button class="close-detail" id="close-detail">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 6L6 18M6 6L18 18" stroke="white" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+        </button>
+        <div class="horizontal-scroll" id="detail-scroll" data-lenis-prevent>
+            <!-- Detail images will be injected here -->
+        </div>
+        <div class="detail-info">
+            <h2 id="detail-title">Project Title</h2>
+            <p id="detail-category">Category</p>
+            <p id="detail-description" class="detail-description"></p>
+            <a id="detail-video" href="#" target="_blank" class="detail-video-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+                </svg>
+                Watch Video
+            </a>
+        </div>
+    </div>
+
+    <!-- About Us Page Overlay -->
+    <div class="about-overlay" id="about-overlay" data-lenis-prevent>
+        <button class="close-about" id="close-about">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 6L6 18M6 6L18 18" stroke="white" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+        </button>
+        <div class="about-content">
+            <h1 class="about-title">ORDIENT INFRA</h1>
+            <h3 class="about-subtitle">OUR WORK</h3>
+
+            <p class="about-paragraph">
+                Each project at <strong>Ordient Infra</strong> is a reflection of people, purpose, and place.
+                Our portfolio showcases a range of residential and commercial spaces, unified by thoughtful planning,
+                material sensitivity, and refined aesthetics.
+            </p>
+
+            <div class="about-categories">
+                <h4>PROJECT CATEGORIES</h4>
+                <ul>
+                    <li class="about-category-link" data-filter="all">All Projects</li>
+                    <li class="about-category-link" data-filter="arch-comm">Architect Commercial</li>
+                    <li class="about-category-link" data-filter="arch-res">Architect Residence</li>
+                    <li class="about-category-link" data-filter="int-comm">Interior Commercial</li>
+                    <li class="about-category-link" data-filter="int-res">Interior Residential</li>
+                    <li class="about-category-link" data-filter="construction">Constructions</li>
+                </ul>
+            </div>
+
+            <div class="about-contact">
+                <h4>GET IN TOUCH</h4>
+                <div class="contact-links">
+                    <a href="mailto:mail@ordientgroup.com" class="contact-link">mail@ordientgroup.com</a>
+                    <a href="tel:+919731847847" class="contact-link">+91 97318 47847</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="lightbox" class="lightbox">
+        <span class="close-lightbox">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+    </div>
+
+    <!-- Lenis for Smooth Scroll -->
+    <script src="/js/lenis.min.js"></script>
+
+    <script src="/js/data.js?v=1.1.1"></script>
+    <script src="/js/app.js?v=1.1.4"></script>
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.wmv
+*.flv
+*.webm
+*.zip
+*.rar
+node_modules/
+.DS_Store
+.vercel

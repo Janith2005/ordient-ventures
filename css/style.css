@@ -1,0 +1,941 @@
+:root {
+    --bg-color: #0a0a0a;
+    --text-color: #ffffff;
+    --accent-color: #f0f0f0;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --blur: 20px;
+    --font-main: 'Inter', sans-serif;
+    --font-mono: 'Geist Mono', monospace;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Hide Scrollbar Globally */
+::-webkit-scrollbar {
+    display: none;
+}
+
+* {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+/* Lenis smooth scrolling */
+html.lenis {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+/* Updated Layout */
+.container {
+    padding: 0;
+    width: 100vw;
+    min-height: 100vh;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    /* Small gap as requested */
+}
+
+@media (max-width: 1200px) {
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile Header */
+.mobile-header {
+    display: none;
+    position: fixed;
+    top: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    pointer-events: auto;
+    background: rgba(15, 15, 15, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 0.8rem 1.5rem;
+    white-space: nowrap;
+}
+
+.mobile-header span {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: white;
+}
+
+@media (max-width: 600px) {
+    .mobile-header {
+        display: block;
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 80px 8px 100px 8px;
+        /* Extra space for floating pills */
+    }
+
+    .bottom-controls {
+        padding: 0 1rem;
+        bottom: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        height: auto;
+    }
+
+    .brand-pill {
+        position: static;
+        transform: none;
+        padding: 0.8rem 1rem;
+        flex: 1;
+        justify-content: center;
+    }
+
+    .menu-pill {
+        padding: 0.8rem 1rem;
+        font-size: 0.8rem;
+        min-width: auto;
+        flex: 1;
+        justify-content: center;
+    }
+
+    .brand-pill,
+    .menu-pill {
+        font-size: 0.75rem;
+    }
+
+    .menu-pill {
+        gap: 0.5rem;
+    }
+
+    #menu-label {
+        display: none;
+    }
+
+    .menu-pill::after {
+        content: "MENU";
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        letter-spacing: -0.02em;
+    }
+
+    .close-detail {
+        top: 1rem;
+        right: 1rem;
+        width: 40px;
+        height: 40px;
+    }
+
+    .category-menu {
+        width: 90%;
+        left: 50%;
+        right: auto;
+        bottom: 5rem;
+    }
+}
+
+.project-card {
+    aspect-ratio: 3/4;
+    /* Vertical/Portrait ratio */
+    border-radius: 4px;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Large screens: maybe 2 columns if very wide, but user wanted "fully to each width" */
+@media (min-width: 2000px) {
+    .grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+.project-card img {
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.project-card:hover img {
+    transform: scale(1.1);
+}
+
+/* Hover Overlay */
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    /* Dark dimming */
+    backdrop-filter: blur(8px);
+    /* Blur effect */
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    padding: 2rem;
+}
+
+.project-card:hover .card-overlay {
+    opacity: 1;
+}
+
+.overlay-title {
+    font-family: var(--font-main);
+    font-weight: 400;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+    transform: translateY(10px);
+    transition: transform 0.4s ease;
+}
+
+.project-card:hover .overlay-title {
+    transform: translateY(0);
+}
+
+
+
+@media (hover: none) and (pointer: coarse),
+(max-width: 768px) {
+    .card-overlay {
+        opacity: 1;
+        /* Gradient Blur from bottom - reduced height */
+        background: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.4) 30%, transparent 100%);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+
+        /* Create a gradual mask so the top of the card is clear while the bottom is blurred - start lower */
+        -webkit-mask-image: linear-gradient(to bottom, transparent 60%, black 98%);
+        mask-image: linear-gradient(to bottom, transparent 60%, black 98%);
+
+        justify-content: flex-end;
+        padding: 1rem;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .overlay-title {
+        transform: translateY(0);
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+        opacity: 1 !important;
+        color: #ffffff !important;
+        font-weight: 700;
+        font-size: 0.8rem;
+        line-height: 1.2;
+    }
+}
+
+/* Bottom Controls */
+.bottom-controls {
+    position: fixed;
+    bottom: 2rem;
+    width: 100%;
+    height: 80px;
+    /* Give it some height for absolute positioning context */
+    display: flex;
+    /* Kept for alignment potential */
+    justify-content: flex-start;
+    /* Align pills to the left */
+    align-items: center;
+    /* Vertically center */
+    padding: 0 2rem;
+    z-index: 100;
+    pointer-events: none;
+    gap: 12px;
+}
+
+.brand-pill {
+    position: static;
+    transform: none;
+    /* Align to vertical center */
+    pointer-events: auto;
+    background: rgba(15, 15, 15, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: white;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.brand-pill:hover {
+    background: rgba(25, 25, 25, 0.8);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.menu-pill {
+    pointer-events: auto;
+    /* Mild Dark Glass Effect */
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    /* Small corner radius */
+
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    cursor: pointer;
+    min-width: 200px;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    margin-left: auto;
+    /* Push to right */
+}
+
+.menu-pill:hover {
+    background: rgba(0, 0, 0, 0.7);
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.menu-pill:active {
+    transform: scale(0.98);
+}
+
+.logo-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand-pill span {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    font-size: 0.85rem;
+}
+
+.menu-pill span {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.menu-pill .menu-icon svg {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.menu-pill.active .menu-icon svg {
+    transform: rotate(180deg);
+}
+
+/* Category Menu - Centered */
+.category-menu {
+    position: fixed;
+    bottom: 6rem;
+    /* Above the pill */
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    width: 300px;
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 0.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 99;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+}
+
+.category-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.menu-header {
+    font-family: var(--font-mono);
+    padding: 1rem 1.5rem;
+    font-size: 0.65rem;
+    opacity: 0.5;
+    letter-spacing: 0.05rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.category-item {
+    font-family: var(--font-mono);
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    opacity: 0.7;
+    font-size: 0.8rem;
+}
+
+.category-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    opacity: 1;
+}
+
+.category-item.active {
+    color: white;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.05);
+    opacity: 1;
+}
+
+/* Project Detail View */
+.project-detail-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #0a0a0a;
+    z-index: 200;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-detail-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.close-detail {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 201;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+}
+
+.close-detail:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.horizontal-scroll {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* scroll-snap-type: y mandatory; Assumed cause of "can't scroll" feeling */
+    -webkit-overflow-scrolling: touch;
+    padding: 0;
+    gap: 16px;
+    /* Space between images */
+    padding-bottom: 150px;
+    /* Space for bottom content */
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.detail-image-container {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding: 0 16px;
+    /* Side padding */
+    /* scroll-snap-align: start; */
+}
+
+.detail-image-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.detail-info {
+    position: fixed;
+    /* Keep it fixed at the bottom while images scroll */
+    bottom: 2rem;
+    left: 2rem;
+    z-index: 202;
+    pointer-events: none;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.detail-info h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.2rem;
+    font-weight: 500;
+    color: white;
+}
+
+.detail-info p {
+    font-family: var(--font-mono);
+    opacity: 0.8;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+}
+
+.detail-description {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin-top: 1.2rem;
+    max-width: 450px;
+    opacity: 0.8;
+    color: #f0f0f0;
+    pointer-events: auto;
+    /* Allow text selection */
+}
+
+.detail-video-link {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    padding: 0.6rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    width: fit-content;
+    transition: all 0.3s ease;
+    pointer-events: auto;
+}
+
+.detail-video-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.detail-video-link svg {
+    color: #ff0000;
+}
+
+@media (max-width: 900px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .detail-image-container {
+        /* min-width: 90vw; Removed */
+        padding: 0 12px;
+    }
+
+    .detail-info {
+        bottom: 2rem;
+        left: 2rem;
+        right: 2rem;
+        /* Ensure it doesn't overflow */
+        width: auto;
+    }
+
+    .detail-info h2 {
+        font-size: 1.5rem;
+        /* Reduced from 2rem for better mobile fit */
+    }
+}
+
+/* Lightbox Styles */
+.lightbox {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    z-index: 300;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    /* Prevent scroll */
+    background-color: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox.active {
+    display: flex;
+    /* Show only when active */
+}
+
+.lightbox-content {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 95%;
+    max-height: 90vh;
+    object-fit: contain;
+    /* Maintain aspect ratio */
+    border-radius: 12px;
+    animation: zoom 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes zoom {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.close-lightbox {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.close-lightbox:hover {
+    color: #bbb;
+}
+
+@media (max-width: 700px) {
+    .lightbox-content {
+        width: 95%;
+    }
+}
+
+/* About Pill Styling */
+.about-pill {
+    pointer-events: auto;
+    background: rgba(15, 15, 15, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    color: white;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+}
+
+.about-pill:hover {
+    background: rgba(25, 25, 25, 0.8);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.about-pill span {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    font-size: 0.85rem;
+}
+
+/* About Overlay Styling */
+.about-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #0a0a0a;
+    z-index: 300;
+    /* Ensure it's above everything */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.about-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.close-about {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 211;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+}
+
+.close-about:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.about-content {
+    max-width: 800px;
+    width: 100%;
+    color: white;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.about-title {
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 100;
+    /* Thin (100) or Extra Light (200) */
+    letter-spacing: 0.15em;
+    /* Wide spacing */
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+
+.about-subtitle {
+    font-family: var(--font-main);
+    font-size: 1.2rem;
+    font-weight: 400;
+    /* Regular (400) or Medium (500) */
+    margin-bottom: 3rem;
+    color: rgba(255, 255, 255, 0.5);
+    /* Muted Grey */
+    text-transform: none;
+    /* Title Case fallback from HTML */
+    letter-spacing: 0.02em;
+}
+
+.about-paragraph {
+    font-size: 22px;
+    /* Large for readability */
+    line-height: 1.5;
+    font-weight: 300;
+    /* Light (300) */
+    margin-bottom: 2rem;
+    /* Reduced from 4rem */
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 800px;
+    text-transform: none;
+    /* Sentence Case from HTML */
+}
+
+/* ... existing code ... */
+
+.about-contact {
+    margin-top: 2rem;
+    /* Reduced from 4rem */
+}
+
+.about-contact h4 {
+    font-family: var(--font-main);
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    opacity: 0.6;
+}
+
+.contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.contact-link {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-weight: 300;
+    transition: color 0.3s;
+    width: fit-content;
+    position: relative;
+    z-index: 5;
+    pointer-events: auto;
+    /* Explicitly enable clicks */
+}
+
+.contact-link:hover {
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .bottom-controls {
+        flex-wrap: wrap;
+        justify-content: center;
+        height: auto;
+        padding-bottom: 1rem;
+    }
+
+    .brand-pill,
+    .about-pill {
+        flex: 1;
+        justify-content: center;
+    }
+
+    .menu-pill {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .about-content {
+        padding: 1rem;
+    }
+
+    .about-subtitle {
+        margin-bottom: 2rem;
+    }
+
+    .about-paragraph {
+        margin-bottom: 3rem;
+    }
+}
+
+/* Footer Contact Pills */
+.contact-pills {
+    display: flex;
+    gap: 12px;
+    pointer-events: auto;
+    margin-left: 2rem;
+    z-index: 101;
+    /* Ensure above background */
+    align-items: center;
+    /* Vertically align */
+}
+
+.nav-contact-link {
+    background: rgba(15, 15, 15, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 0.8rem 1.5rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-family: var(--font-main);
+    font-weight: 300;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    display: inline-block;
+    /* Ensure padding works */
+}
+
+.nav-contact-link:hover {
+    color: white;
+    background: rgba(25, 25, 25, 0.6);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 1100px) {
+    .contact-pills {
+        display: none;
+        /* Hide to avoid overlapping with menu pill on smaller screens */
+    }
+}
